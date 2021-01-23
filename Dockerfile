@@ -1,4 +1,4 @@
-FROM python:3.9 as builder
+FROM python:3.6 as builder
 RUN pip install pipenv
 COPY . /tmp/app/
 WORKDIR /tmp/app/

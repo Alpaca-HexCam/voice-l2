@@ -4,10 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-setuptools = "*"
+words2num = "*"
+googletrans = "*"
+speechrecognition = "*"
+flask = "*"
 firebase-admin = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.6"

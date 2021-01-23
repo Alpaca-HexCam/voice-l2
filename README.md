@@ -14,7 +14,10 @@ Run `flask run` in top level directory
 
 #### Test your urls
 ##### GET request
-`curl localhost:5000/endpoint`
+```bash
+curl localhost:5000/endpoint # For local builds
+```
+
 
 ##### POST request
 `curl -d '{"my_data": "inputs"}' localhost:5000/endpoint`
@@ -26,6 +29,10 @@ docker build -t <container_name> .  # e.g  <container_name> = command-service
 
 #### To run a container:
 ```bash
-docker run -p 5000:5000 <container_name> 
+docker run -p 8000:8000 <container_name> 
 ```
-Note: press Cntrl + C to stop (same thing on both Mac and Windows)dock
+You can user the same `curl` command to run the command against the container; but replace the port as follows:
+```bash
+curl localhost:8000/index
+```
+Note: press Ctrl + C to stop (same thing on both Mac and Windows)dock

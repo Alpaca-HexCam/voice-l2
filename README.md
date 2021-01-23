@@ -1,27 +1,35 @@
 ## General python Flask API template
 
 ##### Required installs:
-`pipenv`, `docker`
+`docker`
+
+##### Install pipenv
+`pip3 install pipenv`
 
 #### When you first open the project
 Run `pipenv install` in the top level directory
 
 #### User pipenv to install libraries
-E.g: `pipenv install dateutil`
+E.g: `pipenv install <library-name>`
 
 #### Run development server
 Run `flask run` in top level directory
 
+
+## If you started the server using `flask run`
 #### Test your urls
 ##### GET request
 ```bash
 curl localhost:5000/endpoint # For local builds
 ```
 
-
 ##### POST request
-`curl -d '{"my_data": "inputs"}' localhost:5000/endpoint`
+```bash
+curl -d '{"my_data": "inputs"}' localhost:5000/endpoint
+```
 
+
+## If you want to containerise your workload
 #### To build a container:
 ```bash
 docker build -t <container_name> .  # e.g  <container_name> = command-service
@@ -36,3 +44,15 @@ You can user the same `curl` command to run the command against the container; b
 curl localhost:8000/index
 ```
 Note: press Ctrl + C to stop (same thing on both Mac and Windows)dock
+
+## If you started the server using `flask run`
+#### Test your urls
+##### GET request
+```bash
+curl localhost:8000/endpoint # For local builds
+```
+
+##### POST request
+```bash
+curl -d '{"my_data": "inputs"}' localhost:8000/endpoint
+```

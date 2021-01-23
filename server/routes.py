@@ -4,5 +4,10 @@ from flask import request, jsonify
 @app.route('/')
 @app.route('/index') #www.alapaca.com/index
 def index():
-    data = {'my_data': 'data'}
-    return jsonify(data)
+    return "hello world"
+
+
+
+
+#www.alpaca.com/ -> hello world
+#www.alpaca.com/index -> hellow world

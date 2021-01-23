@@ -32,6 +32,3 @@ CMD ["--http-socket", "0.0.0.0:8000", \
      "--chdir", "/app", \
      "--check-static", "static", \
      "--module", "server:app"]
-
-
-

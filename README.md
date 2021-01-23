@@ -6,9 +6,18 @@
 #### When you first open the project
 Run `pipenv install` in the top level directory
 
+#### User pipenv to install libraries
+E.g: `pipenv install dateutil`
+
 #### Run development server
 Run `flask run` in top level directory
 
+#### Test your urls
+##### GET request
+`curl localhost:5000/endpoint`
+
+##### POST request
+`curl -d '{"my_data": "inputs"}' localhost:5000/endpoint`
 
 #### To build a container:
 ```bash

@@ -5,4 +5,6 @@ RUN cd /tmp && pipenv lock --keep-outdated --requirements > requirements.txt
 RUN pip install -r /tmp/requirements.txt
 COPY . /tmp/app
 RUN pip install /tmp/app
-CMD flask run app:main
+WORKDIR /tmp/app
+RUN ls
+CMD flask run

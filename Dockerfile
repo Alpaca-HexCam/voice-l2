@@ -21,7 +21,8 @@ RUN set -xe \
  && rm -f *.whl \
  && rm -rf /var/lib/apt/lists/* \
  && mkdir -p /app 
-
+COPY ./server/creds/firebase.json .
+ENV GOOGLE_APPLICATION_CREDENTIALS=~/firebase.json
 ENTRYPOINT ["/usr/bin/uwsgi", \
             "--master", \
             "--enable-threads", \

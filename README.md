@@ -13,10 +13,10 @@ Run `pipenv install` in the top level directory
 E.g: `pipenv install <library-name>`
 
 #### Run development server
-Run `flask run` in top level directory
+Run `sh startlocal.sh` in top level directory
 
 
-## If you started the server using `flask run`
+## If you started the server using startlocal.sh
 #### Test your urls
 ##### GET request
 ```bash
@@ -56,3 +56,11 @@ curl localhost:8000/endpoint # For local builds
 ```bash
 curl -d '{"my_data": "inputs"}' localhost:8000/endpoint
 ```
+
+
+### Troubleshooting
+`ModuleNotFoundError: No module named 'x'`
+-> Run `pipenv update` then try again
+
+`Error: Could not locate a Flask application. You did not provide the "FLASK_APP" environment variable, and a "wsgi.py" or "app.py" module was not found in the current directory.`
+-> Try renaming `main.py` to `app.py` and try again (no idea why this happens 😋)

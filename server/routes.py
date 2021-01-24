@@ -23,7 +23,7 @@ def index():
     if request.method == 'POST':
         req = request.get_json()
         lang = req["lang"]
-        type = req["type"]
+        # type = req["type"]
         user_id = req["user_id"]
         path = req["path"]
         blob = storage.blob(path)
@@ -32,7 +32,7 @@ def index():
         audio = AudioSegment.from_ogg("/tmp/test.ogg")
         audio.export("/tmp/test.wav", format="wav")
 
-        value = processSpeech("/tmp/test.wav", type, lang=lang)
+        value, type = processSpeech("/tmp/test.wav", lang=lang)
         if value is not None:
             data = {
                 "command_type": type,
@@ -40,8 +40,10 @@ def index():
                 "user_id": user_id
             }
             # Change url to command
-            res = requests.post('http://localhost:8000/test', json=data)
-            return res.text
+            # print(data)
+            # res = requests.post('http://localhost:5000/test', json=data)
+            # return res.text
+            return jsonify(data)
     else:
         return "ERROR"
     return "OK"
@@ -65,14 +67,8 @@ def speechToText(audio_file, lang):
             return None
 
 
-def processSpeech(audio_file, type, lang="en-GB"):
+def processSpeech(audio_file, lang="en-GB"):
     # Type is one of ["add", "subtract", "general"]
-    if type == "add":
-        sign = 1
-    elif type == "subtract":
-        sign = -1
-    else:
-        return None
 
     text = speechToText(audio_file, lang)
     if text is None:
@@ -87,6 +83,16 @@ def processSpeech(audio_file, type, lang="en-GB"):
 
     words = text.split()
 
+    income = ["made", "earned", "salary", "earn"]
+    expense = ["bought", "spent", "shop"]
+
+    if len(list(set(words) & set(income))) > 0:
+        type = "add"
+    elif len(list(set(words) & set(expense))) > 0:
+        type = "subtract"
+    else:
+        type = "general"
+    print(text)
     val = 0
     for w in words:
         w = re.sub('[$£,]', '', w)
@@ -98,4 +104,4 @@ def processSpeech(audio_file, type, lang="en-GB"):
         except:
             pass
 
-    return val
+    return val, type

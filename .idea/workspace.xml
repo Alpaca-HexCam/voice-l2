@@ -3,11 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="2aca2f61-0692-45b2-b7d3-8629985f2193" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rec.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rec1.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rec2.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rec3.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rec4.ogg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/test.ogg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.wav" beforeDir="false" afterPath="$PROJECT_DIR$/test.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/urdu.ogg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +43,7 @@
       <option name="presentableId" value="Default" />
       <updated>1611435911369</updated>
       <workItem from="1611435916608" duration="230000" />
-      <workItem from="1611436154415" duration="17445000" />
+      <workItem from="1611436154415" duration="17646000" />
     </task>
     <servers />
   </component>

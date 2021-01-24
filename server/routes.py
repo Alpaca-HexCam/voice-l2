@@ -28,12 +28,12 @@ def index():
         user_id = req["user_id"]
         path = req["path"]
         blob = storage.blob(path)
-        blob.download_to_filename("test.ogg")
+        blob.download_to_filename("/tmp/test.ogg")
 
-        audio = AudioSegment.from_ogg("test.ogg")
-        audio.export("test.wav", format="wav")
+        audio = AudioSegment.from_ogg("/tmp/test.ogg")
+        audio.export("/tmp/test.wav", format="wav")
 
-        value = processSpeech("test.wav", type, lang=lang)
+        value = processSpeech("/tmp/test.wav", type, lang=lang)
         if value is not None:
             data = {
                 "command_type": type,

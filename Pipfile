@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 words2num = "*"
-googletrans = "*"
+googletrans = "==3.1.0a0"
 speechrecognition = "*"
 flask = "*"
 firebase-admin = "*"

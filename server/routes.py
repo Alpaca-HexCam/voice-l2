@@ -1,12 +1,15 @@
+# coding=utf-8
 
 from server import app
-from flask import request, jsonify
+from flask import request, jsonify, redirect, url_for
 import speech_recognition as sr
 import os
 import words2num
 import re
 from googletrans import Translator
 from pydub import AudioSegment
+import json
+import requests
 
 from firebase import Firebase
 import firebase_admin
@@ -16,42 +19,37 @@ firebase_admin.initialize_app()
 db = firestore.client()
 storage = storage.bucket("alpaca-72130.appspot.com")
 
-@app.route('/')
-@app.route('/index') #www.alapaca.com/index
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    blob = storage.blob("audio_recordings/file.ogg")
-    # print(dir(blob))
-    blob.download_to_filename("test.ogg")
-    audio = AudioSegment.from_ogg("test.ogg")
-    audio.export("test.wav", format="wav")
+    if request.method == 'POST':
+        req = request.get_json()
+        lang = req["lang"]
+        type = req["type"]
+        user_id = req["user_id"]
+        path = req["path"]
+        blob = storage.blob(path)
+        blob.download_to_filename("test.ogg")
 
-    text = speechToText("test.wav", lang="en-GB")
-    if text is None:
-        return "None"
+        audio = AudioSegment.from_ogg("test.ogg")
+        audio.export("test.wav", format="wav")
 
-    if not lang == "en-GB":
-        translator = Translator()
-        text = translator.translate(text, src=lang[:2], dest="en").text
+        value = processSpeech("test.wav", type, lang=lang)
+        if value is not None:
+            data = {
+                "command_type": type,
+                "amount": value,
+                "user_id": user_id
+            }
+            # Change url to command
+            res = requests.post('http://localhost:5000/test', json=data)
+            return res.text
+    else:
+        return "ERROR"
+    return "OK"
 
-    if text is None:
-        return "None"
-
-    words = text.split()
-
-    print(words)
-
-    # all_files = storage.child("audio_recordings").list_files()
-    return "all_files"
-
-@app.route('/create-document')
-def create_document():
-    try:
-        db.collection(u'docs').add({'myfirst':'doc'})
-        return "Completed request"
-    except Exception as e:
-        print(e)
-        return 'Could not make request'
-
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+    return "Received"
 
 def speechToText(audio_file, lang):
     r = sr.Recognizer()
@@ -68,18 +66,11 @@ def speechToText(audio_file, lang):
             return None
 
 
-def playAudio(audio_file):
-    pygame.mixer.init()
-    my_sound = pygame.mixer.Sound(audio_file)
-    my_sound.play()
-    pygame.time.wait(int(my_sound.get_length() * 1000))
-
-
 def processSpeech(audio_file, type, lang="en-GB"):
-    # Type is one of ["income", "expense", "general"]
-    if type == "income":
+    # Type is one of ["add", "subtract", "general"]
+    if type == "add":
         sign = 1
-    elif type == "expense":
+    elif type == "subtract":
         sign = -1
     else:
         return None
@@ -97,11 +88,9 @@ def processSpeech(audio_file, type, lang="en-GB"):
 
     words = text.split()
 
-    print(words)
-
     val = 0
     for w in words:
-        w = re.sub('[$£]', '', w)
+        w = re.sub('[$£,]', '', w)
         try:
             if w.isdigit():
                 val += float(w)
@@ -110,17 +99,4 @@ def processSpeech(audio_file, type, lang="en-GB"):
         except:
             pass
 
-    print(val)
-    # numbers = [num for num in words if num.isdigit()]
-    # numbers = map(int, numbers)
-    # return sign * sum(numbers)
-
-if __name__ == "__main__":
-    data_folder = "drive_data/"
-    files = os.listdir(data_folder)
-
-    langs = ["en-GB", "en-GB", "en-GB", "ru-RU", "ru-RU", "ur-IN"]
-    for f, lang in zip(files[:], langs[:]):
-        audiofile = data_folder + f
-        # print(audiofile)
-        processSpeech(audiofile, "income", lang=lang)
+    return val

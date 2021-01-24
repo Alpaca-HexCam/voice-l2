@@ -11,7 +11,6 @@ from pydub import AudioSegment
 import json
 import requests
 
-from firebase import Firebase
 import firebase_admin
 from firebase_admin import credentials, db, firestore, storage
 
@@ -41,7 +40,7 @@ def index():
                 "user_id": user_id
             }
             # Change url to command
-            res = requests.post('http://localhost:5000/test', json=data)
+            res = requests.post('http://localhost:8000/test', json=data)
             return res.text
     else:
         return "ERROR"

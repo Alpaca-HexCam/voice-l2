@@ -1,28 +1,21 @@
-FROM python:3.6 as builder
-RUN pip install pipenv
-COPY . /tmp/app/
-WORKDIR /tmp/app/
-RUN pipenv lock --keep-outdated --requirements > requirements.txt && pipenv run python setup.py bdist_wheel
-
-
 FROM ubuntu:bionic
-COPY --from=builder /tmp/app/dist/*.whl .
 ARG DEBIAN_FRONTEND=noninteractive
 RUN set -xe \
- && apt-get update -q \
- && apt-get install -y -q \
-        python3-wheel \
+&& apt-get update -q \
+&& apt-get install -y -q \
         python3-pip \
         uwsgi-plugin-python3 \
- && python3 -m pip install *.whl \
- && apt-get remove -y python3-pip python3-wheel \
- && apt-get autoremove -y \
- && apt-get clean -y \
- && rm -f *.whl \
- && rm -rf /var/lib/apt/lists/* \
- && mkdir -p /app 
+        ffmpeg
+RUN python3 -m pip install firebase-admin speechrecognition
+RUN python3 -m pip install requests pydub
+RUN python3 -m pip install googletrans==3.1.0a0 words2num
+RUN python3 -m pip install flask
+RUN mkdir -p /app
+
 COPY ./server/creds/firebase.json .
-ENV GOOGLE_APPLICATION_CREDENTIALS=~/firebase.json
+COPY . /app/
+WORKDIR /app/
+ENV GOOGLE_APPLICATION_CREDENTIALS=./server/creds/firebase.json
 ENTRYPOINT ["/usr/bin/uwsgi", \
             "--master", \
             "--enable-threads", \

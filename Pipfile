@@ -9,6 +9,15 @@ googletrans = "*"
 speechrecognition = "*"
 flask = "*"
 firebase-admin = "*"
+grpcio = "*"
+google-cloud-core = "*"
+google-cloud-firestore = "*"
+firebase = "*"
+python-jwt = "*"
+gcloud = "*"
+sseclient = "*"
+pycrypto = "*"
+requests-toolbelt = "*"
 
 [dev-packages]
 

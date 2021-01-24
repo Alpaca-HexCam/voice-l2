@@ -22,8 +22,6 @@ storage = storage.bucket("alpaca-72130.appspot.com")
 def index():
     if request.method == 'POST':
         req = request.get_json()
-        lang = req["lang"]
-        # type = req["type"]
         user_id = req["user_id"]
         path = req["path"]
         blob = storage.blob(path)
@@ -39,10 +37,6 @@ def index():
                 "amount": value,
                 "user_id": user_id
             }
-            # Change url to command
-            # print(data)
-            # res = requests.post('http://localhost:5000/test', json=data)
-            # return res.text
             return jsonify(data)
     else:
         return "ERROR"

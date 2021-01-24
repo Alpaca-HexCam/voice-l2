@@ -18,6 +18,8 @@ gcloud = "*"
 sseclient = "*"
 pycrypto = "*"
 requests-toolbelt = "*"
+pydub = "*"
+ffmpeg = "*"
 
 [dev-packages]
 

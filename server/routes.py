@@ -6,21 +6,42 @@ import os
 import words2num
 import re
 from googletrans import Translator
+from pydub import AudioSegment
 
-import firebase
+from firebase import Firebase
 import firebase_admin
 from firebase_admin import credentials, db, firestore, storage
 
 firebase_admin.initialize_app()
 db = firestore.client()
-storage = firebase_admin.storage.bucket("gs://alpaca-72130.appspot.com")
+storage = storage.bucket("alpaca-72130.appspot.com")
 
 @app.route('/')
 @app.route('/index') #www.alapaca.com/index
 def index():
-    all_files = storage.child("audio_recordings").list_files()
+    blob = storage.blob("audio_recordings/file.ogg")
+    # print(dir(blob))
+    blob.download_to_filename("test.ogg")
+    audio = AudioSegment.from_ogg("test.ogg")
+    audio.export("test.wav", format="wav")
 
-    return all_files
+    text = speechToText("test.wav", lang="en-GB")
+    if text is None:
+        return "None"
+
+    if not lang == "en-GB":
+        translator = Translator()
+        text = translator.translate(text, src=lang[:2], dest="en").text
+
+    if text is None:
+        return "None"
+
+    words = text.split()
+
+    print(words)
+
+    # all_files = storage.child("audio_recordings").list_files()
+    return "all_files"
 
 @app.route('/create-document')
 def create_document():

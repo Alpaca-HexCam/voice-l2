@@ -30,7 +30,7 @@ def index():
         audio = AudioSegment.from_ogg("/tmp/test.ogg")
         audio.export("/tmp/test.wav", format="wav")
 
-        value, type = processSpeech("/tmp/test.wav", lang=lang)
+        value, type = processSpeech("/tmp/test.wav")
         if value is not None:
             data = {
                 "command_type": type,
